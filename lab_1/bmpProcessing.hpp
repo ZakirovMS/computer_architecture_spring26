@@ -5,7 +5,7 @@
 
 namespace bmp
 {
-  BMPUnified binarizeBmp(const BMPUnified & bmpFile);
+  BMPUnified binarizeBmp(const BMPUnified & bmpFile, float threshold);
   BMPUnified convertBmp(const BMPUnified & bmpFile);  // from 8 bit-pixel to 16 bit-pixel
 }
 

@@ -1,5 +1,5 @@
 #include "IOBmp.hpp"
-#include <exception>
+#include <stdexcept>
 #include <vector>
 #include "bmpDef.hpp"
 

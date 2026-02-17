@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include "bmpDef.hpp"
+#include "bmpProcessing.hpp"
 #include "IOBmp.hpp"
 
 int main()
@@ -30,5 +31,5 @@ int main()
     return 1;
   }
 
-  bmp::writeBmp(fout, bmp_i);
+  bmp::writeBmp(fout, bmp::binarizeBmp(bmp_i, 0.98));
 }
