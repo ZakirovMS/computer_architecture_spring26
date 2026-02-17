@@ -1,31 +1,24 @@
 #ifndef BMPDEF_HPP
 #define BMPDEF_HPP
 #include <cstdint>
+#include <vector>
 
 #pragma pack(push, 1) // Unambiguous fixation of data alignment in structures
 namespace bmp
 {
 
-  // BITMAPFILEHEADER:
-  struct BMPUnified
-  {
-    BMPFHeader fileHeader;
-    DIBHeader infoHeader;
-    RGBPixel colors;
-  };
-
-  // BITMAPINFOEADER:
-  struct BMPFHeader
+  // BITMAPFILEEADER:
+  struct BMPFileHeader
   {
     char header[2];       // File type - 'BM' for Bitmap
     uint32_t fileSize;    // File size in bytes
-    uint32_t bfReserved1; // Reserved (usually 0)
-    uint32_t bfReserved2; // Reserved too (usually 0)
+    uint16_t bfReserved1; // Reserved (usually 0)
+    uint16_t bfReserved2; // Reserved too (usually 0)
     uint32_t bfOffBits;   // Offset to the pixel data
   };
 
-  // 
-  struct DIBHeader
+  // BITMAPINFOEADER
+  struct BMPInfoHeader
   {
     uint32_t biSize;         // BMPFHeader size (40 bytes)
     int32_t biWidth;         // Image width
@@ -46,6 +39,14 @@ namespace bmp
     uint8_t blue;
     uint8_t green;
     uint8_t red;
+  };
+
+  // BITMAPFILEHEADER:
+  struct BMPUnified
+  {
+    BMPFileHeader fileHeader;
+    BMPInfoHeader infoHeader;
+    std::vector< RGBPixel > pixels;
   };
 
 }
