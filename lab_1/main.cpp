@@ -22,4 +22,13 @@ int main()
     std::cerr << e.what() << '\n';
     return 1;
   }
+
+  std::ofstream fout("../src/result24.bmp", std::ios::binary);
+  if (!fout.is_open())
+  {
+    std::cerr << "Incorrect result file opening" << '\n';
+    return 1;
+  }
+
+  bmp::writeBmp(fout, bmp_i);
 }

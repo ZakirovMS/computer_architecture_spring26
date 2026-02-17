@@ -31,7 +31,22 @@ bmp::BMPUnified bmp::readBmp(std::ifstream & fin)
   resBmp.pixels = pixels;
   return resBmp;
 }
-/*
-void bmp::writeBmp(std::ofstream & in, const BMPUnified & bmpFile)
-{}
-*/
+
+void bmp::writeBmp(std::ofstream & fout, const BMPUnified & bmpFile)
+{
+    fout.write(reinterpret_cast< const char * >(&bmpFile.fileHeader), sizeof(BMPFileHeader));
+    fout.write(reinterpret_cast< const char * >(&bmpFile.infoHeader), sizeof(BMPInfoHeader));
+    fout.seekp(bmpFile.fileHeader.bfOffBits, std::ios::beg);
+    
+    int width = bmpFile.infoHeader.biWidth;
+    int height = bmpFile.infoHeader.biHeight;
+
+    for (int y = height - 1; y >= 0; --y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            const RGBPixel & pixel = bmpFile.pixels[y * width + x];
+            fout.write(reinterpret_cast< const char * >(&pixel), sizeof(RGBPixel));
+        }
+    }
+}
