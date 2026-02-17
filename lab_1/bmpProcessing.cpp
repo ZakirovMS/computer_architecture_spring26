@@ -1,16 +1,16 @@
 #include "bmpProcessing.hpp"
 #include <stdexcept>
 #include <limits>
-#include "bmpDef.hpp"
+#include "bmpDef24.hpp"
 
-bmp::BMPUnified bmp::binarizeBmp(const BMPUnified & bmpFile, float thresholdCoeff)
+bmp::BMPUnified24 bmp::binarizeBmp(const BMPUnified24 & bmpFile, float thresholdCoeff)
 {
   if (thresholdCoeff > 1 || thresholdCoeff < 0)
   {
     throw std::logic_error("Invalid binarization parameter");
   }
 
-  BMPUnified resBmp = bmpFile;
+  BMPUnified24 resBmp = bmpFile;
   int threshold = std::numeric_limits< uint8_t >::max() * thresholdCoeff;
 
   for (size_t i = 0; i < resBmp.pixels.size(); ++i)

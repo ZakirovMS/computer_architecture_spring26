@@ -1,6 +1,6 @@
 #include <fstream>
 #include <iostream>
-#include "bmpDef.hpp"
+#include "bmpDef24.hpp"
 #include "bmpProcessing.hpp"
 #include "IOBmp.hpp"
 
@@ -13,10 +13,10 @@ int main()
     return 1;
   }
 
-  bmp::BMPUnified bmp_i;
+  bmp::BMPUnified24 bmp_i;
   try
   {
-    bmp_i = bmp::readBmp(file);
+    bmp_i = bmp::readBmp24(file);
   }
   catch (const std::exception & e)
   {
@@ -31,5 +31,5 @@ int main()
     return 1;
   }
 
-  bmp::writeBmp(fout, bmp::binarizeBmp(bmp_i, 0.98));
+  bmp::writeBmp24(fout, bmp::binarizeBmp(bmp_i, 0.98));
 }
