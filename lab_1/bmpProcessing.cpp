@@ -33,6 +33,11 @@ bmp::BMPUnified24 bmp::binarizeBmp(const BMPUnified24 & bmpFile, float threshold
   return resBmp;
 }
 
+void analyzeBmp(std::ofstream & in, const bmp::BMPUnified24 & bmpFile)
+{
+  
+}
+
 /*
 bmp::BMPUnified bmp::convertBmp(const BMPUnified & bmpFile)
 {}

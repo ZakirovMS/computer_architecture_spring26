@@ -6,6 +6,7 @@
 namespace bmp
 {
   BMPUnified24 binarizeBmp(const BMPUnified24 & bmpFile, float threshold);
+  void analyzeBmp(std::ofstream & in, const BMPUnified24 & bmpFile);
   BMPUnified24 convertBmp(const BMPUnified24 & bmpFile);  // from 8 bit-pixel to 16 bit-pixel
 }
 

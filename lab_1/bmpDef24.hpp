@@ -8,7 +8,7 @@ namespace bmp
 {
 
   // BITMAPFILEEADER:
-  struct BMPFileHeader24
+  struct BMPFileHeader
   {
     char header[2];       // File type - 'BM' for Bitmap
     uint32_t fileSize;    // File size in bytes
@@ -18,7 +18,7 @@ namespace bmp
   };
 
   // BITMAPINFOEADER
-  struct BMPInfoHeader24
+  struct BMPInfoHeader
   {
     uint32_t biSize;         // BMPFHeader size (40 bytes)
     int32_t biWidth;         // Image width
@@ -33,22 +33,39 @@ namespace bmp
     uint32_t biClrImportant; // Important colors
   };
 
-  // Define a pixel structure for RGB
+  // Define a pixel structure
   struct RGBPixel24
   {
-    uint8_t blue;
-    uint8_t green;
-    uint8_t red;
+    uint8_t blue;           //Blue in 24
+    uint8_t green;          //Green in 24
+    uint8_t red;            //Red in 24
+  };
+
+  struct RGBPixel16
+  {
+    uint16_t bitSetBGR;     //bbbbbgggggrrrrr0
+  };
+
+  struct BMPUnified
+  {
+    BMPFileHeader fileHeader;
+    BMPInfoHeader infoHeader;
   };
 
   // BITMAPFILEHEADER:
-  struct BMPUnified24
+  struct BMPUnified24 final: public BMPUnified
   {
-    BMPFileHeader24 fileHeader;
-    BMPInfoHeader24 infoHeader;
+    BMPFileHeader fileHeader;
+    BMPInfoHeader infoHeader;
     std::vector< RGBPixel24 > pixels;
   };
 
+  struct BMPUnified16 final: public BMPUnified
+  {
+    BMPFileHeader fileHeader;
+    BMPInfoHeader infoHeader;
+    std::vector< RGBPixel16 > pixels;
+  };
 }
 #pragma pack(pop)
 

@@ -13,10 +13,11 @@ int main()
     return 1;
   }
 
-  bmp::BMPUnified24 bmp_i;
+  bmp::BMPUnified * bmp_i;
+
   try
   {
-    bmp_i = bmp::readBmp24(file);
+    bmp_i = bmp::readBmp(file);
   }
   catch (const std::exception & e)
   {
@@ -31,5 +32,6 @@ int main()
     return 1;
   }
 
-  bmp::writeBmp24(fout, bmp::binarizeBmp(bmp_i, 0.98));
+  //todo: Support for different bit depth of BMP file for binarization function
+  //bmp::writeBmp24(fout, bmp::binarizeBmp(*bmp_i, 0.02));
 }
