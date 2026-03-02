@@ -1,5 +1,5 @@
-#ifndef BMPDEF24_HPP
-#define BMPDEF24_HPP
+#ifndef BMPDEF8_HPP
+#define BMPDEF8_HPP
 #include <cstdint>
 #include <vector>
 #include "bmpDef.hpp"
@@ -9,7 +9,7 @@
 namespace bmp
 {
   // Define a pixel structure
-  struct RGBPixel24
+  struct RGBPixel8
   {
     uint8_t blue;           //Blue in 24
     uint8_t green;          //Green in 24
@@ -17,9 +17,10 @@ namespace bmp
   };
 
   // BITMAPFILEHEADER:
-  struct BMPUnified24 final: public BMPUnified
+  struct BMPUnified8 final: public BMPUnified
   {
-    std::vector< RGBPixel24 > pixels;
+    std::vector< int32_t > palette[256];
+    std::vector< int8_t > pixels;
   };
 }
 
