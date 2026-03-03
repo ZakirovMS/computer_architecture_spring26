@@ -33,8 +33,15 @@ int main()
     return 1;
   }
 
-  //todo: Support for different bit depth of BMP file for binarization function
-  //bmp::writeBmp24(fout, bmp::binarizeBmp(*bmp_i, 0.02));
+  try
+  {
+    bmp::binarizeBmp(bmp_i, 0.15);
+  }
+  catch (const std::logic_error & e)
+  {
+    std::cerr << e.what() << '\n';
+  }
+
   bmp::writeBmp(fout, bmp_i);
   delete bmp_i;
 }

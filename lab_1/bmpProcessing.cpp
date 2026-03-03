@@ -3,7 +3,7 @@
 #include <limits>
 #include "bmpDef24.hpp"
 
-bmp::BMPUnified24 bmp::binarizeBmp(const BMPUnified24 & bmpFile, float thresholdCoeff)
+void bmp::binarizeBmp24(BMPUnified24 & bmpFile, float thresholdCoeff)
 {
   if (thresholdCoeff > 1 || thresholdCoeff < 0)
   {
@@ -30,12 +30,49 @@ bmp::BMPUnified24 bmp::binarizeBmp(const BMPUnified24 & bmpFile, float threshold
     }
   }
 
-  return resBmp;
+  bmpFile = resBmp;
+}
+
+void bmp::binarizeBmp8(BMPUnified8 & bmpFile, float thresholdCoeff)
+{
+  if (thresholdCoeff > 1 || thresholdCoeff < 0)
+  {
+    throw std::logic_error("Invalid binarization parameter");
+  }
+
+  BMPUnified8 resBmp = bmpFile;
+  uint8_t threshold = static_cast< uint8_t >(255 * thresholdCoeff);
+  resBmp.palette[0] = 0x00FFFFFF;
+  resBmp.palette[1] = 0x00000000;
+  
+  for (size_t i = 0; i < bmpFile.pixels.size(); ++i)
+  {
+    uint8_t index = bmpFile.pixels[i];
+    uint32_t color = bmpFile.palette[index];
+
+    uint8_t brightness = static_cast<uint8_t>((((color >> 0) & 0xFF) + ((color >> 8) & 0xFF) + ((color >> 16) & 0xFF)) / 3);
+
+    resBmp.pixels[i] = (brightness > threshold) ? 0 : 1;
+  }
+
+  bmpFile = resBmp;
+}
+
+void bmp::binarizeBmp(BMPUnified * bmpFile, float thresholdCoeff)
+{
+  if (bmpFile->infoHeader.biBitCount == 24)
+  {
+    binarizeBmp24(*static_cast< BMPUnified24 * >(bmpFile), thresholdCoeff);
+  }
+  else if (bmpFile->infoHeader.biBitCount == 8)
+  {
+    binarizeBmp8(*static_cast< BMPUnified8 * >(bmpFile), thresholdCoeff);
+  }
 }
 
 void analyzeBmp(std::ofstream & in, const bmp::BMPUnified24 & bmpFile)
 {
-  
+
 }
 
 /*
