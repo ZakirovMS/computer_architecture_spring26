@@ -9,8 +9,8 @@ namespace bmp
   void binarizeBmp24(BMPUnified24 & bmpFile, float thresholdCoeff);
   void binarizeBmp8(BMPUnified8 & bmpFile, float thresholdCoeff);
   void binarizeBmp(BMPUnified * bmpFile, float thresholdCoeff);
-  void analyzeBmp(std::ofstream & in, const BMPUnified24 & bmpFile);
-  BMPUnified24 convertBmp(const BMPUnified24 & bmpFile);  // from 8 bit-pixel to 16 bit-pixel
+  void analyzeBmp(std::ostream & out, const BMPUnified * bmpFile);
+  void convertBmp(const BMPUnified * bmpFile);
 }
 
 #endif

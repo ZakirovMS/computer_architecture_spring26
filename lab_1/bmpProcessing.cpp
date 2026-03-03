@@ -1,6 +1,7 @@
 #include "bmpProcessing.hpp"
 #include <stdexcept>
 #include <limits>
+#include <iostream>
 #include "bmpDef24.hpp"
 
 void bmp::binarizeBmp24(BMPUnified24 & bmpFile, float thresholdCoeff)
@@ -70,9 +71,11 @@ void bmp::binarizeBmp(BMPUnified * bmpFile, float thresholdCoeff)
   }
 }
 
-void analyzeBmp(std::ofstream & in, const bmp::BMPUnified24 & bmpFile)
+void bmp::analyzeBmp(std::ostream & out, const BMPUnified * bmpFile)
 {
-
+  std::cout << "Bit per pixel: " << bmpFile->infoHeader.biBitCount << '\n';
+  std::cout << "Height: " << bmpFile->infoHeader.biHeight << '\n';
+  std::cout << "Width: " << bmpFile->infoHeader.biWidth << '\n';
 }
 
 /*

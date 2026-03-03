@@ -26,6 +26,7 @@ int main()
     return 1;
   }
 
+  bmp::analyzeBmp(std::cout, bmp_i);
   std::ofstream fout("../src/result8.bmp", std::ios::binary);
   if (!fout.is_open())
   {
