@@ -2,7 +2,36 @@
 #include <stdexcept>
 #include <limits>
 #include <iostream>
+#include <vector>
 #include "bmpDef24.hpp"
+
+namespace
+{
+  void setGreenPalette(bmp::BMPUnified8 & bmpFile)
+  {
+    for (size_t i = 0; i < 256; ++i)
+    {
+      uint8_t green = static_cast< uint8_t >(i);
+      bmpFile.palette[i] = (static_cast< uint32_t >(green) << 8);
+    }
+  }
+
+  void setPinkPalette(bmp::BMPUnified8 & bmpFile)
+  {
+    constexpr uint8_t targetBlue  = 180;
+    constexpr uint8_t targetGreen = 105;
+    constexpr uint8_t targetRed   = 255;
+
+    for (size_t i = 0; i < 256; ++i)
+    {
+      uint8_t b = static_cast<uint8_t>((i * targetBlue)  / 255);
+      uint8_t g = static_cast<uint8_t>((i * targetGreen) / 255);
+      uint8_t r = static_cast<uint8_t>((i * targetRed)   / 255);
+
+      bmpFile.palette[i] = (static_cast<uint32_t>(b) << 0) | (static_cast<uint32_t>(g) << 8) | (static_cast<uint32_t>(r) << 16);
+    }
+  }
+}
 
 void bmp::binarizeBmp24(BMPUnified24 & bmpFile, float thresholdCoeff)
 {
@@ -78,7 +107,22 @@ void bmp::analyzeBmp(std::ostream & out, const BMPUnified * bmpFile)
   std::cout << "Width: " << bmpFile->infoHeader.biWidth << '\n';
 }
 
-/*
-bmp::BMPUnified bmp::convertBmp(const BMPUnified & bmpFile)
-{}
-*/
+
+bmp::BMPUnified8 * bmp::convertBmp(BMPUnified24 * bmpFile)
+{
+  BMPUnified8 * result = new BMPUnified8;
+  result->fileHeader = bmpFile->fileHeader;
+  result->infoHeader = bmpFile->infoHeader;
+  result->infoHeader.biBitCount = 8;
+  result->infoHeader.biSizeImage = result->infoHeader.biHeight * result->infoHeader.biWidth;
+  result->fileHeader.bfOffBits = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + 256 * 4;
+  result->fileHeader.fileSize = result->fileHeader.bfOffBits + result->infoHeader.biSizeImage;
+  setGreenPalette(*result);
+  result->pixels = std::vector< uint8_t >(result->infoHeader.biHeight * result->infoHeader.biWidth);
+  for (size_t i = 0; i < bmpFile->pixels.size(); ++i)
+  {
+    result->pixels[i] = static_cast< uint8_t >((bmpFile->pixels[i].red + bmpFile->pixels[i].green + bmpFile->pixels[i].blue) / 3);
+  }
+
+  return result;
+}

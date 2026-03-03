@@ -8,18 +8,11 @@
 
 namespace bmp
 {
-  // Define a pixel structure
-  struct RGBPixel8
-  {
-    uint8_t blue;           //Blue in 24
-    uint8_t green;          //Green in 24
-    uint8_t red;            //Red in 24
-  };
 
   // BITMAPFILEHEADER:
   struct BMPUnified8 final: public BMPUnified
   {
-    std::vector<uint32_t> palette = std::vector<uint32_t>(256);
+    std::vector< uint32_t > palette = std::vector< uint32_t >(256);
     std::vector< uint8_t > pixels;
   };
 }

@@ -7,7 +7,7 @@
 
 int main()
 {
-  std::ifstream file("../src/test8.bmp", std::ios::binary);
+  std::ifstream file("../src/someBmp.bmp", std::ios::binary);
   if (!file.is_open())
   {
     std::cerr << "Incorrect file opening" << '\n';
@@ -27,16 +27,17 @@ int main()
   }
 
   bmp::analyzeBmp(std::cout, bmp_i);
-  std::ofstream fout("../src/result8.bmp", std::ios::binary);
+  std::ofstream fout("../src/result24.bmp", std::ios::binary);
   if (!fout.is_open())
   {
     std::cerr << "Incorrect result file opening" << '\n';
     return 1;
   }
 
+/*
   try
   {
-    bmp::binarizeBmp(bmp_i, 0.15);
+    bmp::binarizeBmp(bmp_i, 0.9);
   }
   catch (const std::logic_error & e)
   {
@@ -44,5 +45,7 @@ int main()
   }
 
   bmp::writeBmp(fout, bmp_i);
-  delete bmp_i;
+*/
+
+bmp::writeBmp(fout, bmp::convertBmp(static_cast< bmp::BMPUnified24 * >(bmp_i)));
 }
