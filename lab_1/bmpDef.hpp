@@ -38,6 +38,7 @@ namespace bmp
   {
     BMPFileHeader fileHeader;
     BMPInfoHeader infoHeader;
+    ~BMPUnified();
   };
 
 }

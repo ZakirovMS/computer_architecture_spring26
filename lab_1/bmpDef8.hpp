@@ -19,8 +19,8 @@ namespace bmp
   // BITMAPFILEHEADER:
   struct BMPUnified8 final: public BMPUnified
   {
-    std::vector< int32_t > palette[256];
-    std::vector< int8_t > pixels;
+    std::vector<uint32_t> palette = std::vector<uint32_t>(256);
+    std::vector< uint8_t > pixels;
   };
 }
 

@@ -1,12 +1,13 @@
 #include <fstream>
 #include <iostream>
 #include "bmpDef24.hpp"
+#include "bmpDef8.hpp"
 #include "bmpProcessing.hpp"
 #include "IOBmp.hpp"
 
 int main()
 {
-  std::ifstream file("../src/test24.bmp", std::ios::binary);
+  std::ifstream file("../src/test8.bmp", std::ios::binary);
   if (!file.is_open())
   {
     std::cerr << "Incorrect file opening" << '\n';
@@ -25,7 +26,7 @@ int main()
     return 1;
   }
 
-  std::ofstream fout("../src/result24.bmp", std::ios::binary);
+  std::ofstream fout("../src/result8.bmp", std::ios::binary);
   if (!fout.is_open())
   {
     std::cerr << "Incorrect result file opening" << '\n';
@@ -34,4 +35,6 @@ int main()
 
   //todo: Support for different bit depth of BMP file for binarization function
   //bmp::writeBmp24(fout, bmp::binarizeBmp(*bmp_i, 0.02));
+  bmp::writeBmp(fout, bmp_i);
+  delete bmp_i;
 }
