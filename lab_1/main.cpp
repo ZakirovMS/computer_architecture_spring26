@@ -37,7 +37,7 @@ int main()
 /*
   try
   {
-    bmp::binarizeBmp(bmp_i, 0.9);
+    bmp::binarizeBmp(bmp_i, 0.98);
   }
   catch (const std::logic_error & e)
   {
